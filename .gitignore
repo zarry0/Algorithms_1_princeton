@@ -2,4 +2,5 @@ algs4-data/
 hello/
 .DS_Store/
 .vscode/
+.DS_Store
 *.zip
