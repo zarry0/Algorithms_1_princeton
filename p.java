@@ -21,8 +21,8 @@ public class p
 
 class Counter 
 {
-    int num = 0;
-    String id;
+    private int num = 0;
+    private String id;
 
     Counter(String id) {
         this.id = id;
