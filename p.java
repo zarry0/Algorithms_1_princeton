@@ -35,7 +35,7 @@ class Counter
     public int tally() {
         return this.num;
     }
-
+    @Override
     public String toString() {
         return this.num + " " + this.id;
     }

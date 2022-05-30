@@ -3,4 +3,16 @@ hello/
 .DS_Store/
 .vscode/
 .DS_Store
+samples/
+
 *.zip
+*.txt
+*.png
+*.jpg
+*.jpeg
+*.iml
+
+*.class
+
+PercolationVisualizer.java
+InteractivePercolationVisualizer.java
