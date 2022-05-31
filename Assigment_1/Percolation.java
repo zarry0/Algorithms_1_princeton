@@ -4,8 +4,9 @@ public class Percolation {
 
     private final int N;
     private final WeightedQuickUnionUF grid;
-    private boolean[] openSites;
+    private byte[] status;
     private int openSiteCount;
+    private boolean percolates;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n)
@@ -13,13 +14,13 @@ public class Percolation {
         if (n <= 0) throw new IllegalArgumentException("Cannot initialize a grid with n <= 0");
         N = n;
         grid = new WeightedQuickUnionUF(n*n); //Generates an n-by-n grid 
-        openSites = new boolean[n*n]; //Generates an n^2 array (originaly every value is set to false) that represents every open site
+        status = new byte[n*n]; //each one of the 3 LSB represents: if is open, if is conected to top, if is conected to bottom : (000: open, top, bottom)
         openSiteCount = 0;
-        
-        for (int i = 1; i <= n; i++) {  //Generates virtual top and virtual bottom
-            grid.union(0, xyTo1d(1, i));   // join top row
-            grid.union((n*n)-n, xyTo1d(n, i));  // join bottom row
-           
+        percolates = false;
+
+        for (int i = 0; i < n; i++) {  
+            status[i] = 0b010;          //Set top row
+            status[n*n-n+i] = 0b001;    //Set bottom row 
         }
     }
 
@@ -27,44 +28,48 @@ public class Percolation {
     public void open(int row, int col)
     {
         int site = xyTo1d(row, col);
-        if (openSites[site]) return; //if already open skip the rest
-        openSites[site] = true;  //mark the site as open
+        if ((status[site] & 0b100) >> 2 == 1) return;  //if is already open skip the rest
+        status[site] |= 0b100;  //mark the site as open
         openSiteCount++;
 
-        //generates an array containing all open neighbors or -1 otherwise
+        //generates an array containing all open neighbors roots or -1 otherwise
         int[] neighbors = new int[4]; //starting from top to left in cw direction (^ > v <)
-        neighbors[0] = (row == 1) ? -1 : (openSites[site - N] ? site - N : -1); // ^
-        neighbors[2] = (row == N) ? -1 : (openSites[site + N] ? site + N : -1); // v
-        neighbors[3] = (col == 1) ? -1 : (openSites[site - 1] ? site - 1 : -1); // <
-        neighbors[1] = (col == N) ? -1 : (openSites[site + 1] ? site + 1 : -1); // >
+        neighbors[0] = (row == 1) ? -1 : (isOpen(row-1, col) ? grid.find(site - N) : -1); // ^
+        neighbors[2] = (row == N) ? -1 : (isOpen(row+1, col) ? grid.find(site + N) : -1); // v
+        neighbors[3] = (col == 1) ? -1 : (isOpen(row, col-1) ? grid.find(site - 1) : -1); // <
+        neighbors[1] = (col == N) ? -1 : (isOpen(row, col+1) ? grid.find(site + 1) : -1); // >
 
-        int root = grid.find(site); //get the root of the point to open
+        byte joinStatus = status[site];
         for (int i = 0; i < 4; i++) {
             if (neighbors[i] != -1) {
-                if (root != grid.find(neighbors[i])) grid.union(site, neighbors[i]);  //join neighboring points not previously connected
+                grid.union(site, neighbors[i]);
+                joinStatus |= status[neighbors[i]];
             } 
         }
+        int root = grid.find(site);
+        status[root] |= joinStatus;
+        if (status[root] == 7) percolates = true;
     }
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col)
     {
         int site = xyTo1d(row, col);
-        return openSites[site];
+        return (status[site] & 0b100) >> 2 == 1;
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col)
     {
-        int site = xyTo1d(row, col);
-        return openSites[site] && (grid.find(site) == grid.find(0));
+        int site = grid.find(xyTo1d(row, col));
+        return (status[site] & 0b110) == 6; 
     }
 
     // returns the number of open sites
     public int numberOfOpenSites() { return openSiteCount; }
 
     // does the system percolate?
-    public boolean percolates() { return grid.find(N*N-1) == grid.find(0); }
+    public boolean percolates() { return percolates; }
 
     // test client (optional)
     public static void main(String[] args)
