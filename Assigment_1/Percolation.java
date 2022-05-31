@@ -6,9 +6,6 @@ public class Percolation {
     private final WeightedQuickUnionUF grid;
     private boolean[] openSites;
     private int openSiteCount;
-    private int virtualTop;
-    private int virtualBottom;
-    private int[] bottomRoots;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n)
@@ -18,14 +15,12 @@ public class Percolation {
         grid = new WeightedQuickUnionUF(n*n); //Generates an n-by-n grid 
         openSites = new boolean[n*n]; //Generates an n^2 array (originaly every value is set to false) that represents every open site
         openSiteCount = 0;
-        bottomRoots = new int[n];
+        
         for (int i = 1; i <= n; i++) {  //Generates virtual top and virtual bottom
             grid.union(0, xyTo1d(1, i));   // join top row
             grid.union((n*n)-n, xyTo1d(n, i));  // join bottom row
-            bottomRoots[i-1] = xyTo1d(n, i);      // save bottom row roots
+           
         }
-        //virtualTop = grid.find(0);
-        //virtualBottom = grid.find(n*n-1);
     }
 
     // opens the site (row, col) if it is not open already
@@ -49,16 +44,6 @@ public class Percolation {
                 if (root != grid.find(neighbors[i])) grid.union(site, neighbors[i]);  //join neighboring points not previously connected
             } 
         }
-        //if any of the bottom row is conected to something new, update virtualBotom's root
-        /*root = grid.find(site); //update site root
-        for (int i = 0; i < N; i++) { 
-            if (root == bottomRoots[i] || site == bottomRoots[i]) 
-            {
-                 bottomRoots[i] = root;
-                 virtualBottom = root;
-                 break; 
-            } 
-        };*/
     }
 
     // is the site (row, col) open?
@@ -84,17 +69,6 @@ public class Percolation {
     // test client (optional)
     public static void main(String[] args)
     {
-        Percolation perc = new Percolation(4);
-        //System.out.println(perc.isOpen(1, 1));
-        System.out.println(perc.numberOfOpenSites());
-        perc.open(1, 2);
-        perc.open(2, 1);
-        perc.open(3, 2);
-        perc.open(2, 3);
-        perc.open(2, 2);
-        System.out.println(perc.numberOfOpenSites());
-        perc.open(2, 2);
-        System.out.println(perc.numberOfOpenSites());
         
     }
 
