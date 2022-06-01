@@ -19,8 +19,8 @@ public class Percolation {
         percolates = false;
 
         for (int i = 0; i < n; i++) {  
-            status[i] = 0b010;          //Set top row
-            status[n*n-n+i] = 0b001;    //Set bottom row 
+            status[i] |= 0b010;          //Set top row
+            status[n*n-n+i] |= 0b001;    //Set bottom row 
         }
     }
 
@@ -74,7 +74,7 @@ public class Percolation {
     // test client (optional)
     public static void main(String[] args)
     {
-        
+        //
     }
 
     // determines the object based on the coordenates

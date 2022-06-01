@@ -3,17 +3,16 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    private Percolation simulation;
-    private double[] estimates;
-    private double[] confidence;
-    private double x;
-    private double s;
+    private final double[] confidence;
+    private final double x;
+    private final double s;
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials)
     {
         if (n <= 0 || trials <= 0) throw new IllegalArgumentException("Both N & T must be greater than 0");
-        estimates = new double[trials];
+        Percolation simulation;
+        final double[] estimates = new double[trials];
         confidence = new double[2];
 
         for (int i = 0; i < trials; i++){
@@ -34,7 +33,7 @@ public class PercolationStats {
             estimates[i] = simulation.numberOfOpenSites() / (double) (n*n);  //percolation threshold
         }
 
-        x = StdStats.mean(estimates);;
+        x = StdStats.mean(estimates);
         s = StdStats.stddev(estimates);
         double factor = 1.96*s / Math.sqrt(trials);
         confidence[0] = x - factor;
