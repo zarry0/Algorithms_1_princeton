@@ -11,7 +11,7 @@ samples/
 *.jpg
 *.jpeg
 *.iml
-
+*.pdf
 *.class
 
 PercolationVisualizer.java
