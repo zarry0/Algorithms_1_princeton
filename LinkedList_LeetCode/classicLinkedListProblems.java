@@ -29,7 +29,28 @@ public class classicLinkedListProblems {
     }
 
     //Returns the head of the reversed list
-    public ListNode reverseList (ListNode head) {
+    public ListNode reverseList(ListNode head) {
+        
+        // Algorithm
+        // Start from the head of the list until the end
+        //      Take the current node and set its next node to the previous node
+        //      update the previous node with the value of the current node
+        //      move to the next node and repeat (at the begining of each iteration we need to save the value of next to use it here)
+        // previous will now be the las node in the list making it the first node in the reversed list
+        ListNode i = head;
+        ListNode previous = null;
+        ListNode next;
+        while (i != null) {
+            next = i.next;
+            i.next = previous;
+            previous = i;
+            i = next;
+        }
+        return previous;
+    }
+
+    //Returns the head of the reversed list
+    public ListNode reverseListWeird (ListNode head) {
 
         // ALgorithm
         // starting from the head
@@ -132,7 +153,7 @@ public class classicLinkedListProblems {
         // Copy every value of the list to an array
         // Traverse the array form start to finish and to finish to beginning comparing each value, if they're different return false
         // If it manage to traverse the whole array it must be a palindrome
-        
+
         ListNode current = head;
         int length = 0;
         for (ListNode i = head; i != null; i = i.next) length++;
