@@ -46,7 +46,6 @@ public class MyLinkedList
     }
     
     public void addAtHead(int val) {
-        System.out.println("In addAtHead()");
         Node newNode = new Node();
         newNode.val = val;        // give newNode its value
         if (this.head.val == null) { 
@@ -98,7 +97,7 @@ public class MyLinkedList
 
     }
 
-    private Node getNodeAtIndex(int index){
+    public Node getNodeAtIndex(int index){
         index = (index <= 0) ? 0 : index;
         int counter = 0;
         for (Node i = head; i != null; i = i.next){
@@ -149,9 +148,11 @@ public class MyLinkedList
         System.out.println(list);
         list.addAtTail(1);
         System.out.println(list);
-        list.addAtTail(3);
+        //list.addAtTail(3);
+        //System.out.println(list);
+        list.deleteAtIndex(0);
         System.out.println(list);
-        System.out.println(list.get(1));
+        
     }
 
     static class Node
