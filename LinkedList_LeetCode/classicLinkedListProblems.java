@@ -166,7 +166,83 @@ public class classicLinkedListProblems {
         for (int k = 0; k < length; k++) if (valArr[k] != valArr[length-k-1]) return false;
         return true;
     }
+
+    //given the heads of two sorted linked lists list1 and list2, return the head of the merged linked list.
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+        // Algorithm
+        // Create an empty list that will hold the merged list
+        // Start from the beginnig of the two lists
+        // Append the smaller value to the merged list
+        // move to the next node of the list that cointained the smaller value
+        // if at any point one value of the two lists is null, append the rest of the other list to the merged list and exit the loop
+        
+        ListNode mergedList = new ListNode(0);
+        ListNode mergedPtr = mergedList;
+
+        ListNode ptr1 = list1;
+        ListNode ptr2 = list2;
+        
+        while (true) {
+            if (ptr1 == null) {
+                mergedPtr.next = ptr2;
+                break;
+            }else if (ptr2 == null) {
+                mergedPtr.next = ptr1;
+                break;
+            }
+            
+            if (ptr1.val < ptr2.val) {
+                mergedPtr.next = ptr1;
+                ptr1 = ptr1.next;
+            } else {
+                mergedPtr.next = ptr2;
+                ptr2 = ptr2.next;
+            }
+            mergedPtr = mergedPtr.next;
+            
+         
+        }
     
+        return mergedList.next;
+    }
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+        ListNode sumList = new ListNode(0);
+        ListNode sumPtr = sumList;
+        ListNode ptr1 = l1;
+        ListNode ptr2 = l2;
+
+        int carry = 0;
+        int sum = 0;
+        
+        int d1 = ptr1.val, d2 = ptr2.val;
+        
+        while (true) {
+            sum = (d1 + d2) + carry;
+            carry = sum / 10;
+            sum = sum % 10;
+            
+            sumPtr.next = new ListNode(sum);
+            sumPtr = sumPtr.next;
+            
+            ptr1 = (ptr1 != null) ? ptr1.next : ptr1;
+            ptr2 = (ptr2 != null) ? ptr2.next : ptr2;
+            
+            if      (ptr1 == null && ptr2 != null) { d1 = 0; d2 = ptr2.val; }
+            else if (ptr1 != null && ptr2 == null) { d1 = ptr1.val; d2 = 0; }
+            else if (ptr1 != null && ptr2 != null) { d1 = ptr1.val; d2 = ptr2.val; }
+            else { 
+                if (carry != 0) sumPtr.next = new ListNode(carry);
+                break; 
+            }
+        }
+        
+        return sumList.next;
+        
+    }
+
     static class ListNode {
         int val;
         ListNode next;
