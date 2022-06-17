@@ -102,36 +102,59 @@ public class Deque<Item> implements Iterable<Item> {
     public static void main(String[] args) {
 
         StdOut.println("\nUnit tests\n");
+        StdOut.println("Enter the number of items to input");
         int n = StdIn.readInt();
         
         Deque<Integer> deque =  new Deque<>();
-
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
+        
         StdOut.println("\nAdd first/ remove first operations");
         for (int i = 0; i < n; i++) deque.addFirst(i);
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         for (int i = 0; i < n; i++) StdOut.println(deque.removeFirst());
-
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
+        
         StdOut.println("\nAdd last/ remove last operations");
         for (int i = 0; i < n; i++) deque.addLast(i);
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         for (int i = 0; i < n; i++) StdOut.println(deque.removeLast());
-
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
+        
         StdOut.println("\nAdd first/ remove last operations");
         for (int i = 0; i < n; i++) deque.addFirst(i);
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         for (int i = 0; i < n; i++) StdOut.println(deque.removeLast());
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         
         StdOut.println("\nAdd last/ remove first operations");
         for (int i = 0; i < n; i++) deque.addLast(i);
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         for (int i = 0; i < n; i++) StdOut.println(deque.removeFirst());
-
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
+        
         StdOut.println("\nAdd last & Add first / remove first & remove last operations");
         for (int i = 0; i < n; i++) {
             deque.addLast(i);
             deque.addFirst(i);
         }
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
         //StdOut.println(deque);
         for (int i = 0; i < n; i++) {
             StdOut.println(deque.removeLast());
             StdOut.println(deque.removeFirst());
         }
+        StdOut.println("Deque is empty: " + deque.isEmpty());
+        StdOut.println("Deque length: " + deque.size());
 
         StdOut.println("\nIterator\n");
         for (int i = 0; i < n; i++) deque.addLast(i);
