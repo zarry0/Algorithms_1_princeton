@@ -91,6 +91,7 @@ public class Deque<Item> implements Iterable<Item> {
         public boolean hasNext() { return current != null; }
         public void remove() { throw new UnsupportedOperationException("Remove operation not supported");}
         public Item next() {
+            if (!hasNext()) throw new NoSuchElementException("No more items in the deque");
             Item currentVal = current.val;
             current         = current.next;
             return currentVal;
