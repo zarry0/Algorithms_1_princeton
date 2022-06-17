@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 
-public class Deque<Item> { //implements Iterable<Item> {
+public class Deque<Item> implements Iterable<Item> {
 
     private Node head, tail;
     private int listLength;
@@ -65,7 +65,7 @@ public class Deque<Item> { //implements Iterable<Item> {
         Node oldHead = head;
         head = head.next;
         if (listLength > 1) head.prev = null;
-        else tail = head;
+        else                tail = head;
         listLength--;
         return oldHead.val;
     }
@@ -76,159 +76,65 @@ public class Deque<Item> { //implements Iterable<Item> {
         Node oldTail = tail;
         tail = tail.prev;
         if (listLength > 1) tail.next = null;
-        else head = tail;
+        else                head = tail;
         listLength--;
         return oldTail.val;
     }
 
     // return an iterator over items in order from front to back
-//->public Iterator<Item> iterator() { return; }
+    public Iterator<Item> iterator() { return new DequeIterator(); }
+
+    private class DequeIterator implements Iterator<Item> 
+    {
+        private Node current = head;
+
+        public boolean hasNext() { return current != null; }
+        public void remove() { throw new UnsupportedOperationException("Remove operation not supported");}
+        public Item next() {
+            Item currentVal = current.val;
+            current         = current.next;
+            return currentVal;
+        }
+    }
 
     // unit testing (required)
     public static void main(String[] args) {
-        Deque<Integer> s = new Deque<>();
 
-        StdOut.println("Add first operations\n");
-        
-        StdOut.println("Created empty deque");
-        StdOut.println(s);
-        StdOut.println("list length: " + s.size());
-        StdOut.println("Head: " + s.head);
-        StdOut.println("Tail prev: " + s.tail);
-        StdOut.println("Tail: " + s.tail);
-
-        StdOut.println("\nAdd 0 from head");
-        s.addFirst(0);
-        StdOut.println(s);
-        StdOut.println("list length: " + s.size());
-        StdOut.println("Head: " + s.head.val);
-        StdOut.println("Tail prev: " + s.tail.prev);
-        StdOut.println("Tail: " + s.tail.val);
-       
-        StdOut.println("\nAdd 1 from head");
-        s.addFirst(1);
-        StdOut.println(s);
-        StdOut.println("list length: " + s.size());
-        StdOut.println("Head: " + s.head.val);
-        StdOut.println("Tail prev: " + s.tail.prev.val);
-        StdOut.println("Tail: " + s.tail.val);
-       
-        StdOut.println("\nAdd 2 from head");
-        s.addFirst(2);
-        StdOut.println(s);
-        StdOut.println("list length: " + s.size());
-        StdOut.println("Head: " + s.head.val);
-        StdOut.println("Tail prev: " + s.tail.prev.val);
-        StdOut.println("Tail: " + s.tail.val);
-
-        StdOut.println("\nAdd last operations\n");
-
-        Deque<Integer> s2 = new Deque<>();
-        
-        StdOut.println("Created empty deque");
-        StdOut.println(s2);
-        StdOut.println("list length: " + s2.size());
-        StdOut.println("Head: " + s2.head);
-        StdOut.println("Tail prev: " + s2.tail);
-        StdOut.println("Tail: " + s2.tail);
-        
-
-        StdOut.println("\nAdd 0 from tail");
-        s2.addLast(0);
-        StdOut.println(s2);
-        StdOut.println("list length: " + s2.size());
-        StdOut.println("Head: " + s2.head.val);
-        StdOut.println("Tail prev: " + s2.tail.prev);
-        StdOut.println("Tail: " + s2.tail.val);
-       
-        StdOut.println("\nAdd 1 from tail");
-        s2.addLast(1);
-        StdOut.println(s2);
-        StdOut.println("list length: " + s2.size());
-        StdOut.println("Head: " + s2.head.val);
-        StdOut.println("Tail prev: " + s2.tail.prev.val);
-        StdOut.println("Tail: " + s2.tail.val);
-       
-        StdOut.println("\nAdd 2 from tail");
-        s2.addLast(2);
-        StdOut.println(s2);
-        StdOut.println("list length: " + s2.size());
-        StdOut.println("Head: " + s2.head.val);
-        StdOut.println("Tail prev: " + s2.tail.prev.val);
-        StdOut.println("Tail: " + s2.tail.val); 
-
-        StdOut.println("\nRemove first operations\n");
-        StdOut.println(s2);
- 
-        StdOut.println("\nRemoved value: " + s2.removeFirst());
-        StdOut.println(s2);
-        StdOut.println("List length: " + s2.size());
-        StdOut.println("Head: " + s2.head.val);
-        StdOut.println("Head prev: " + s2.head.prev);
-        StdOut.println("Tail: " + s2.tail.val);
-        StdOut.println("Tail prev: " + s2.tail.prev.val);
- 
-        StdOut.println("\nRemoved value: " + s2.removeFirst());
-        StdOut.println(s2);
-        StdOut.println("List length: " + s2.size());
-        StdOut.println("Head: " + s2.head.val);
-        StdOut.println("Head prev: " + s2.head.prev);
-        StdOut.println("Tail: " + s2.tail.val);
-        StdOut.println("Tail prev: " + s2.tail.prev);
- 
-        StdOut.println("\nRemoved value: " + s2.removeFirst());
-        StdOut.println(s2);
-        StdOut.println("List length: " + s2.size());
-        StdOut.println("Head: " + s2.head);
-        StdOut.println("Head prev: " + s2.head);
-        StdOut.println("Tail: " + s2.tail);
-        StdOut.println("Tail prev: " + s2.tail);
- 
-        //StdOut.println("\nRemoved value: " + s2.removeFirst());
-
-        StdOut.println("\nRemove last operations\n");
-        StdOut.println(s);
- 
-        StdOut.println("\nRemoved value: " + s.removeFirst());
-        StdOut.println(s);
-        StdOut.println("List length: " + s.size());
-        StdOut.println("Head: " + s.head.val);
-        StdOut.println("Head prev: " + s.head.prev);
-        StdOut.println("Tail: " + s.tail.val);
-        StdOut.println("Tail prev: " + s.tail.prev.val);
- 
-        StdOut.println("\nRemoved value: " + s.removeFirst());
-        StdOut.println(s);
-        StdOut.println("List length: " + s.size());
-        StdOut.println("Head: " + s.head.val);
-        StdOut.println("Head prev: " + s.head.prev);
-        StdOut.println("Tail: " + s.tail.val);
-        StdOut.println("Tail prev: " + s.tail.prev);
- 
-        StdOut.println("\nRemoved value: " + s.removeFirst());
-        StdOut.println(s);
-        StdOut.println("List length: " + s.size());
-        StdOut.println("Head: " + s.head);
-        StdOut.println("Head prev: " + s.head);
-        StdOut.println("Tail: " + s.tail);
-        StdOut.println("Tail prev: " + s.tail);
- 
-        //StdOut.println("\nRemoved value: " + s.removeFirst());
-
-        StdOut.println("\nUnit test\n");
-        Deque<Integer> u =  new Deque<>();
+        StdOut.println("\nUnit tests\n");
         int n = StdIn.readInt();
-        for (int i = 0; i < n; i++) u.addFirst(i);
-        StdOut.println(u);
-        for (int i = 0; i < n; i++) StdOut.println(u.removeLast() + "       List: " + u);
-        StdOut.println(u);
-        for (int i = 0; i < n; i++) u.addLast(i);
-        StdOut.println(u);
-        for (int i = 0; i < n; i++) StdOut.println(u.removeFirst() + "       List: " + u);
-        StdOut.println(u);
+        
+        Deque<Integer> deque =  new Deque<>();
 
+        StdOut.println("\nAdd first/ remove first operations");
+        for (int i = 0; i < n; i++) deque.addFirst(i);
+        for (int i = 0; i < n; i++) StdOut.println(deque.removeFirst());
 
+        StdOut.println("\nAdd last/ remove last operations");
+        for (int i = 0; i < n; i++) deque.addLast(i);
+        for (int i = 0; i < n; i++) StdOut.println(deque.removeLast());
 
+        StdOut.println("\nAdd first/ remove last operations");
+        for (int i = 0; i < n; i++) deque.addFirst(i);
+        for (int i = 0; i < n; i++) StdOut.println(deque.removeLast());
+        
+        StdOut.println("\nAdd last/ remove first operations");
+        for (int i = 0; i < n; i++) deque.addLast(i);
+        for (int i = 0; i < n; i++) StdOut.println(deque.removeFirst());
+
+        StdOut.println("\nAdd last & Add first / remove first & remove last operations");
+        for (int i = 0; i < n; i++) {
+            deque.addLast(i);
+            deque.addFirst(i);
+        }
+        //StdOut.println(deque);
+        for (int i = 0; i < n; i++) {
+            StdOut.println(deque.removeLast());
+            StdOut.println(deque.removeFirst());
+        }
+
+        StdOut.println("\nIterator\n");
+        for (int i = 0; i < n; i++) deque.addLast(i);
+        for (int i : deque) StdOut.println(i);
 
     }
 
@@ -237,14 +143,14 @@ public class Deque<Item> { //implements Iterable<Item> {
         private Node next;
         private Node prev;
     }
-
-    @Override
-    public String toString() {
-        String linkedList = "head - ";
-        for (Node i = head; i != null; i = i.next) {
-            linkedList += i.val;
-            linkedList += " -> ";
-        };
-        return linkedList + "null";
-    }
+    // For debugging
+    // @Override
+    // public String toString() {
+    //     String linkedList = "head - ";
+    //     for (Node i = head; i != null; i = i.next) {
+    //         linkedList += i.val;
+    //         linkedList += " -> ";
+    //     };
+    //     return linkedList + "null";
+    // }
 }
