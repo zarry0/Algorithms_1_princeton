@@ -102,9 +102,10 @@ public class Deque<Item> implements Iterable<Item> {
     public static void main(String[] args) {
 
         StdOut.println("\nUnit tests\n");
-        StdOut.println("Enter the number of items to input");
-        int n = StdIn.readInt();
-        
+        // StdOut.println("Enter the number of items to input");
+        // int n = StdIn.readInt();
+        int n = 20;
+
         Deque<Integer> deque =  new Deque<>();
         StdOut.println("Deque is empty: " + deque.isEmpty());
         StdOut.println("Deque length: " + deque.size());
