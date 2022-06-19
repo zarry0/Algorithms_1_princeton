@@ -66,7 +66,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
                 StdRandom.shuffle(shuffledQueue);
             }
             public boolean hasNext() {return i < itemCount;}
-            public void remove() { throw new UnsupportedOperationException(); }
+            public void remove() { throw new UnsupportedOperationException("Remove operation not supported"); }
             public Item next() {
                 if (!hasNext()) throw new NoSuchElementException("No more items in the queue");
                 return shuffledQueue[i++];
@@ -83,7 +83,9 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
                 bag.enqueue(i);
                 StdOut.println(bag.queueToString());
             }
-            
+            StdOut.println("Queue is empty: " + bag.isEmpty());
+            StdOut.println("Queue item count: " + bag.size());
+
             for (int i = 0; i < bag.queueLength(); i++){
                 StdOut.println(bag.sample());
             }
