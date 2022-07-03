@@ -4,6 +4,8 @@ hello/
 .vscode/
 .DS_Store
 samples/
+.idea/
+.lift/
 
 *.zip
 *.txt
