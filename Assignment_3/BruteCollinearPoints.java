@@ -3,10 +3,13 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
 import java.util.Arrays;
 
+import javax.sound.sampled.Line;
+
 public class BruteCollinearPoints {
 
     private LineSegment[] segments = {};
     private int numberOfSegments;
+    private Node head;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
@@ -24,7 +27,7 @@ public class BruteCollinearPoints {
         numberOfSegments = 0;
         if (n < 4) return;
         
-        Node head = new Node();
+        this.head = new Node();
         Node current = head;
 
         Point[] lastSegment = new Point[2];
@@ -69,13 +72,13 @@ public class BruteCollinearPoints {
         }
 
         //StdOut.println("number of segments: " + numberOfSegments);
-        if (numberOfSegments < 1) return;
-        segments = new LineSegment[numberOfSegments];
-        int j = 0;
-        for (Node i = head; i != null; i = i.next) {
-            segments[j++] = i.val;
-            if (j >= numberOfSegments) break;
-        }
+        // if (numberOfSegments < 1) return;
+        // segments = new LineSegment[numberOfSegments];
+        // int j = 0;
+        // for (Node i = head; i != null; i = i.next) {
+        //     segments[j++] = i.val;
+        //     if (j >= numberOfSegments) break;
+        // }
 
     }
 
@@ -86,7 +89,16 @@ public class BruteCollinearPoints {
 
     // the line segments 
     public LineSegment[] segments() {
-        return this.segments;
+        LineSegment[] segments = {};
+        if (numberOfSegments < 1) return segments;
+        segments = new LineSegment[numberOfSegments];
+        int j = 0;
+        for (Node i = head; i != null; i = i.next) {
+            segments[j++] = i.val;
+            if (j >= numberOfSegments) break;
+        }
+        return segments;
+
     }
     
     public static void main(String[] args) {
@@ -112,6 +124,18 @@ public class BruteCollinearPoints {
     
         // print and draw the line segments
         BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        StdDraw.setPenColor(100, 100, 255);
+        StdDraw.setPenRadius(0.0025);
+        LineSegment[] segments = collinear.segments();
+        for (LineSegment segment : segments) {
+            StdOut.println(segment);
+            segment.draw();
+        }
+        StdDraw.show();
+        //mutation test
+        segments[0] = new LineSegment(points[0], points[5]);
+        StdDraw.setPenColor(100, 255, 100);
+        StdDraw.setPenRadius(0.0025);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
