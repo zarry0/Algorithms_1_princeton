@@ -3,11 +3,8 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
 import java.util.Arrays;
 
-import javax.sound.sampled.Line;
-
 public class BruteCollinearPoints {
 
-    private LineSegment[] segments = {};
     private int numberOfSegments;
     private Node head;
 
@@ -71,15 +68,6 @@ public class BruteCollinearPoints {
             }
         }
 
-        //StdOut.println("number of segments: " + numberOfSegments);
-        // if (numberOfSegments < 1) return;
-        // segments = new LineSegment[numberOfSegments];
-        // int j = 0;
-        // for (Node i = head; i != null; i = i.next) {
-        //     segments[j++] = i.val;
-        //     if (j >= numberOfSegments) break;
-        // }
-
     }
 
     // the number of line segments   
@@ -133,14 +121,14 @@ public class BruteCollinearPoints {
         }
         StdDraw.show();
         //mutation test
-        segments[0] = new LineSegment(points[0], points[5]);
-        StdDraw.setPenColor(100, 255, 100);
-        StdDraw.setPenRadius(0.0025);
-        for (LineSegment segment : collinear.segments()) {
-            StdOut.println(segment);
-            segment.draw();
-        }
-        StdDraw.show();
+        // segments[0] = new LineSegment(points[0], points[5]);
+        // StdDraw.setPenColor(100, 255, 100);
+        // StdDraw.setPenRadius(0.0025);
+        // for (LineSegment segment : collinear.segments()) {
+        //     StdOut.println(segment);
+        //     segment.draw();
+        // }
+        // StdDraw.show();
     }
 
     private boolean isSegment(Point[] points) {
