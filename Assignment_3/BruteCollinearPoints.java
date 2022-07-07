@@ -71,6 +71,7 @@ public class BruteCollinearPoints {
         }
 
         //StdOut.println("number of segments: " + numberOfSegments);
+        if (numberOfSegments < 1) return;
         segments = new LineSegment[numberOfSegments];
         int j = 0;
         for (Node i = head; i != null; i = i.next) {
