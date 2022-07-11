@@ -16,6 +16,7 @@ public class PointPlotter {
     public static void main(String[] args) {
 
         // rescale coordinates and turn on animation mode
+        StdDraw.setPenRadius(0.0025);
         StdDraw.setXscale(0, 32768);
         StdDraw.setYscale(0, 32768);
         StdDraw.show();
@@ -28,10 +29,12 @@ public class PointPlotter {
             int x = in.readInt();
             int y = in.readInt();
             Point p = new Point(x, y);
+            StdDraw.text(x,y,p.toString());
             p.draw();
         }
 
         // display to screen all at once
+        
         StdDraw.show();
     }
 }
