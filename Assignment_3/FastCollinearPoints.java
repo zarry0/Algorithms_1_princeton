@@ -15,39 +15,43 @@ public class FastCollinearPoints {
             throw new IllegalArgumentException("Null argument in the constructor");
 
         int n = points.length;
-        segmentList = new ArrayList<LineSegment>();
-        numberOfSegments = 0;
-        if (n < 4)
-            return;
 
-        Arrays.sort(points);
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < n; i++) {
             if (points[i] == null)
-                throw new IllegalArgumentException("Null point in the argument array");
-            if (points[i].compareTo(points[i + 1]) == 0)
+                    throw new IllegalArgumentException("Null point in the argument array");
+            for (int j = i+1; j < n; j++){
+                if (points[j] == null)
+                    throw new IllegalArgumentException("Null point in the argument array");
+                if (points[i].compareTo(points[j]) == 0)
                 throw new IllegalArgumentException("Null argument in the constructor");
+            }
         }
 
+        segmentList = new ArrayList<LineSegment>();
+        numberOfSegments = 0;
+        
         Point[] pointsCopy = new Point[n];
         for (int j = 0; j < n; j++)
             pointsCopy[j] = points[j];
 
+        Arrays.sort(pointsCopy);
+        
         for (int i = 0; i < n; i++) {
-            Point pivot = pointsCopy[i];
-            Arrays.sort(points, 0, n, pivot.slopeOrder());
+            Point pivot = points[i];
+            Arrays.sort(pointsCopy, 0, n, pivot.slopeOrder());
 
             int start = 1;
-            Point current = points[0];
+            Point current = pointsCopy[0];
             for (int j = 2; j <= n; j++) {
                 if (j < n)
-                    current = points[j];
+                    current = pointsCopy[j];
 
-                if (j == n || pivot.slopeOrder().compare(points[j - 1], current) != 0) {
+                if (j == n || pivot.slopeOrder().compare(pointsCopy[j - 1], current) != 0) {
                     if (j - start >= 3) {
-                        Arrays.sort(points, start, j);
+                        Arrays.sort(pointsCopy, start, j);
 
-                        if (pivot.compareTo(points[start]) < 0) {
-                            LineSegment newSegment = new LineSegment(pivot, points[j - 1]);
+                        if (pivot.compareTo(pointsCopy[start]) < 0) {
+                            LineSegment newSegment = new LineSegment(pivot, pointsCopy[j - 1]);
                             segmentList.add(newSegment);
                             numberOfSegments++;
                         }

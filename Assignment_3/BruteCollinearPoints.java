@@ -15,14 +15,25 @@ public class BruteCollinearPoints {
         int n = points.length;
         int r = 4;
 
-        Arrays.sort(points);
-        for (int i = 0; i < n-1; i++){
-            if (points[i] == null) throw new IllegalArgumentException("Null point in the argument array");
-            if (points[i].compareTo(points[i+1]) == 0) throw new IllegalArgumentException("Repeated point in the argument array");
+        for (int i = 0; i < n; i++) {
+            if (points[i] == null)
+                    throw new IllegalArgumentException("Null point in the argument array");
+            for (int j = i+1; j < n; j++){
+                if (points[j] == null)
+                    throw new IllegalArgumentException("Null point in the argument array");
+                if (points[i].compareTo(points[j]) == 0)
+                throw new IllegalArgumentException("Null argument in the constructor");
+            }
         }
-
+        
         numberOfSegments = 0;
         if (n < 4) return;
+        
+        Point[] pointsCopy = new Point[n];
+        for (int j = 0; j < n; j++)
+        pointsCopy[j] = points[j];
+        
+        Arrays.sort(pointsCopy);
         
         this.head = new Node();
         Node current = head;
@@ -39,10 +50,10 @@ public class BruteCollinearPoints {
                     for (int l = k+1; l < n; l++) 
                     {
                         // Compute each posible combination of 4 points (nC4 = n! / (4!*(n-4)!))
-                        selectedPoints[0] = points[i];
-                        selectedPoints[1] = points[j];
-                        selectedPoints[2] = points[k];
-                        selectedPoints[3] = points[l];
+                        selectedPoints[0] = pointsCopy[i];
+                        selectedPoints[1] = pointsCopy[j];
+                        selectedPoints[2] = pointsCopy[k];
+                        selectedPoints[3] = pointsCopy[l];
                         
                         if (!isSegment(selectedPoints)) continue; 
                         //StdOut.println("[ " + selectedPoints[0] + " " + selectedPoints[1] + " " + selectedPoints[2] + " " + selectedPoints[3] + " " + " ]");
