@@ -59,13 +59,7 @@ public class Board {
 
     // is this board the goal board?
     public boolean isGoal() {
-        for (int i = 0; i < this.n; i++)
-            for (int j = 0; j < this.n; j++){
-                if (i == this.n - 1 && j == this.n - 1) continue;
-                if (this.tiles[i][j] != (j + this.n * i + 1))
-                    return false;
-            }
-        return true;
+        return hamming() == 0;
     }
 
     // does this board equal y?
