@@ -88,7 +88,7 @@ public class Board {
             neighborTiles[0][1] = coords[1];       
         }
         if (coords[1] + 1 < this.n) {      // →
-            neighborTiles[1][1] = coords[1] - 1;
+            neighborTiles[1][1] = coords[1] + 1;
             neighborTiles[1][0] = coords[0];       
         }
         if (coords[0] + 1 < this.n) {      // ↓
@@ -96,7 +96,7 @@ public class Board {
             neighborTiles[2][1] = coords[1];       
         }
         if (coords[1] - 1 >= 0) {          // ←
-            neighborTiles[3][1] = coords[1] + 1;
+            neighborTiles[3][1] = coords[1] - 1;
             neighborTiles[3][0] = coords[0];       
         }
         
@@ -146,7 +146,7 @@ public class Board {
                       {4,2,5},
                       {7,8,6}};
         int[][] t2 = {{8,1,3},
-                      {4,0,2},
+                      {4,2,1},
                       {7,6,5}};
         int[][] goal = {{1,2,3},
                         {4,5,6},
@@ -162,8 +162,8 @@ public class Board {
         StdOut.printf("Board 2 hamming: %d\n" ,b2.hamming());
         StdOut.printf("Board 2 manhattan: %d\n" ,b2.manhattan());
         
-        StdOut.printf("Board 1 neighbors: \n" );
-        for (Board i : b1.neighbors()){
+        StdOut.printf("Board 2 neighbors: \n" );
+        for (Board i : b2.neighbors()){
             StdOut.println(i + "\n");
         }
         
