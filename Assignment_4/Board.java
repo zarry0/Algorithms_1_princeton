@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 import java.util.Arrays;
 import java.util.Stack;
 
@@ -115,25 +114,24 @@ public class Board {
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
 
+
         int[][] twinTiles = new int[this.n][this.n];
         copyTiles(this.tiles, twinTiles);
 
-        int[] tile0 = new int[2];
-        int[] tile1 = new int[2];
+        int[] tile0 = {0,0};
+        int[] tile1 = {0,1};
 
-        while (true) {
-            tile0[0] = StdRandom.uniform(this.n);
-            tile0[1] = StdRandom.uniform(this.n);
-
-            tile1[0] = StdRandom.uniform(this.n);
-            tile1[1] = StdRandom.uniform(this.n);
-
-            if (Arrays.equals(tile0, tile1)) continue;
-            if (twinTiles[tile0[0]][tile0[1]] == 0) continue;
-            if (twinTiles[tile1[0]][tile1[1]] == 0) continue;
-    
-            break;
+        if (twinTiles[tile0[0]][tile0[1]] == 0) {
+            tile0[1]++;
+            tile1[1] = (tile0[1] + 1) % this.n;
+            if (tile1[1] == 0) tile1[0] = (tile1[0] + 1) % this.n;
         }
+        
+        if (twinTiles[tile1[0]][tile1[1]] == 0) {
+            tile1[1] = (tile1[1] + 1) % this.n;
+            if (tile1[1] == 0) tile1[0] = (tile1[0] + 1) % this.n;
+        }
+
         exch(twinTiles, tile0, tile1);
 
         Board twin = new Board(twinTiles);
