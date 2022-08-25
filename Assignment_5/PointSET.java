@@ -42,11 +42,13 @@ public class PointSET {
     public Point2D nearest(Point2D p){               // a nearest neighbor in the set to point p; null if the set is empty 
         validateInput(p);
         if (this.size == 0) return null;
-
-        Point2D nearest = new Point2D(2, 2);
+        double bestDistance = Double.POSITIVE_INFINITY;
+        double distanceToPoint;
+        Point2D nearest = new Point2D(2,2);
         for (Point2D point : this.set) {
-            if (p.equals(point)) continue;
-            if (p.distanceSquaredTo(point) < p.distanceSquaredTo(nearest)) {
+            distanceToPoint = p.distanceSquaredTo(point);
+            if (distanceToPoint < bestDistance) {
+                bestDistance = distanceToPoint;
                 nearest = point;
             }
         }

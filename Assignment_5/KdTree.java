@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
 
 public class KdTree {
@@ -93,6 +94,7 @@ public class KdTree {
     public Iterable<Point2D> range(RectHV rect){     // all points that are inside the rectangle (or on the boundary).
         validateInput(rect);
         Queue<Point2D> pointsInRange = new Queue<>();
+        if (this.size == 0) return pointsInRange;
         range(rect, treeRoot, pointsInRange);
         return pointsInRange;
     }
@@ -104,7 +106,7 @@ public class KdTree {
             points.enqueue(nodeRoot.point);
         
         //Check whether the query rectangle intersects one or both sides of the nodes rectangle
-        double[][] coords = new double[2][1];
+        double[][] coords = new double[2][2];
         coords[0][0] = (nodeRoot.orientation) ? queryRect.ymin() : queryRect.xmin();
         coords[0][1] = (nodeRoot.orientation) ? queryRect.ymax() : queryRect.xmax();
         coords[1][0] = (nodeRoot.orientation) ? nodeRoot.point.y() : nodeRoot.point.x();
@@ -122,7 +124,7 @@ public class KdTree {
 
     public Point2D nearest(Point2D p){               // a nearest neighbor in the set to point p; null if the set is empty 
         validateInput(p);
-
+        if (this.size == 0) return null;
         Node nearestNode = nearest(p, this.treeRoot, this.treeRoot);
         return (nearestNode != null) ? nearestNode.point : null;
     }
@@ -177,6 +179,8 @@ public class KdTree {
             kdtree.insert(p);
         }
         kdtree.draw();
+
+        StdOut.println(kdtree.nearest(new Point2D(0.6875, 1.0)));
  
     }
 
